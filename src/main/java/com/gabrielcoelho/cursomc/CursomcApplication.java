@@ -13,6 +13,7 @@ import com.gabrielcoelho.cursomc.domain.Cidade;
 import com.gabrielcoelho.cursomc.domain.Cliente;
 import com.gabrielcoelho.cursomc.domain.Endereco;
 import com.gabrielcoelho.cursomc.domain.Estado;
+import com.gabrielcoelho.cursomc.domain.ItemPedido;
 import com.gabrielcoelho.cursomc.domain.Pagamento;
 import com.gabrielcoelho.cursomc.domain.PagamentoComBoleto;
 import com.gabrielcoelho.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.gabrielcoelho.cursomc.repositories.CidadeRepository;
 import com.gabrielcoelho.cursomc.repositories.ClienteRepository;
 import com.gabrielcoelho.cursomc.repositories.EnderecoRepository;
 import com.gabrielcoelho.cursomc.repositories.EstadoRepository;
+import com.gabrielcoelho.cursomc.repositories.ItemPedidoRepository;
 import com.gabrielcoelho.cursomc.repositories.PagamentoRepository;
 import com.gabrielcoelho.cursomc.repositories.PedidoRepository;
 import com.gabrielcoelho.cursomc.repositories.ProdutoRepository;
@@ -33,28 +35,31 @@ import com.gabrielcoelho.cursomc.repositories.ProdutoRepository;
 public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
-	CategoriaRepositoy categoriaRepository;
+	private CategoriaRepositoy categoriaRepository;
 
 	@Autowired
-	ProdutoRepository produtoRepository;
+	private ProdutoRepository produtoRepository;
 	
 	@Autowired
-	EstadoRepository estadoRepository;
+	private EstadoRepository estadoRepository;
 	
 	@Autowired
-	CidadeRepository cidadeRepository;
+	private CidadeRepository cidadeRepository;
 
 	@Autowired
-	ClienteRepository clienteRepository;
+	private ClienteRepository clienteRepository;
 
 	@Autowired
-	EnderecoRepository enderecoRepository;
+	private EnderecoRepository enderecoRepository;
 	
 	@Autowired
-	PedidoRepository pedidoRepository;
+	private PedidoRepository pedidoRepository;
 	
 	@Autowired
-	PagamentoRepository pagamentoRepository;
+	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -118,5 +123,17 @@ public class CursomcApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
 		pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
 		
+		ItemPedido item1 = new ItemPedido(p1, pedido1, 0.00, 1, 2000.00);
+		ItemPedido item2 = new ItemPedido(p3, pedido1, 0.00, 2, 80.00);
+		ItemPedido item3 = new ItemPedido(p2, pedido2, 100.00, 1, 800.00);
+		
+		pedido1.getItens().addAll(Arrays.asList(item1, item2));
+		pedido2.getItens().addAll(Arrays.asList(item3));
+		
+		p1.getItens().addAll(Arrays.asList(item1));
+		p2.getItens().addAll(Arrays.asList(item3));
+		p3.getItens().addAll(Arrays.asList(item2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(item1, item2, item3));
 	}
 }
