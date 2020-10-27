@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.gabrielcoelho.cursomc.domain.Categoria;
+import com.gabrielcoelho.cursomc.dtos.CategoriaDTO;
 import com.gabrielcoelho.cursomc.repositories.CategoriaRepositoy;
 import com.gabrielcoelho.cursomc.services.exceptions.DataIntegrityException;
 import com.gabrielcoelho.cursomc.services.exceptions.ObjectNotFoundException;
@@ -55,4 +56,7 @@ public class CategoriaService {
 		}
 	}
 	
+	public Categoria fromDTO(CategoriaDTO obj) {
+		return new Categoria(obj.getId(), obj.getNome());
+	}
 }
