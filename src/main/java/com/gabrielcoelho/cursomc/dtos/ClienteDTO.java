@@ -7,8 +7,10 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.gabrielcoelho.cursomc.domain.Cliente;
+import com.gabrielcoelho.cursomc.services.validation.ClienteInsert;
 
 @SuppressWarnings("deprecation")
+@ClienteInsert
 public class ClienteDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
