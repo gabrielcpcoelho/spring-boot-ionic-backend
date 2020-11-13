@@ -2,15 +2,19 @@ package com.gabrielcoelho.cursomc.dtos;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.gabrielcoelho.cursomc.domain.Cliente;
 import com.gabrielcoelho.cursomc.services.validation.ClienteInsert;
+import com.gabrielcoelho.cursomc.services.validation.ClienteUpdate;
 
 @SuppressWarnings("deprecation")
 @ClienteInsert
+@ClienteUpdate
 public class ClienteDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -22,6 +26,7 @@ public class ClienteDTO implements Serializable{
 	
 	@NotEmpty(message = "O E-mail do Cliente é obrigatório")
 	@Email(message = "E-mail inválido")
+	@Column(unique = true)
 	private String email;
 
 	@NotEmpty(message = "O Tipo de Documento do Cliente é obrigatório")
